@@ -1,5 +1,7 @@
 # SnapIt
 
+[![CI](https://github.com/shoutez/snapit/actions/workflows/ci.yml/badge.svg)](https://github.com/shoutez/snapit/actions/workflows/ci.yml)
+
 A lightweight macOS menu bar app for capturing screenshots.
 
 <p align="center">
@@ -53,6 +55,19 @@ SnapIt runs as a menu bar app — it won't appear in your Dock.
 - Choose your screenshot save folder
 
 Screenshots are saved as `SnapIt-YYYY-MM-DD-HHmmss.png` in your chosen directory (defaults to Desktop).
+
+## Development
+
+```bash
+# Run tests
+make test
+
+# Build debug binary
+swift build
+
+# Build release binary
+make build
+```
 
 ## Permissions
 

@@ -1,19 +1,27 @@
 import AppKit
 
-final class ScreenCaptureService {
+public final class ScreenCaptureService {
     let settings: AppSettings
     weak var floatingPanel: NSPanel?
 
-    init(settings: AppSettings) {
+    public init(settings: AppSettings) {
         self.settings = settings
     }
 
-    func captureWindow() {
-        capture(args: settings.includeWindowShadow ? ["-w"] : ["-w", "-o"])
+    func captureWindowArgs() -> [String] {
+        settings.includeWindowShadow ? ["-w"] : ["-w", "-o"]
     }
 
-    func captureDesktop() {
-        capture(args: [])
+    func captureDesktopArgs() -> [String] {
+        []
+    }
+
+    public func captureWindow() {
+        capture(args: captureWindowArgs())
+    }
+
+    public func captureDesktop() {
+        capture(args: captureDesktopArgs())
     }
 
     private func capture(args: [String]) {
@@ -46,7 +54,7 @@ final class ScreenCaptureService {
         }
     }
 
-    private func screenshotPath() -> String {
+    func screenshotPath() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd-HHmmss"
         let timestamp = formatter.string(from: Date())
