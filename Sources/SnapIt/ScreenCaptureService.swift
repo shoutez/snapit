@@ -1,0 +1,55 @@
+import AppKit
+
+final class ScreenCaptureService {
+    let settings: AppSettings
+    weak var floatingPanel: NSPanel?
+
+    init(settings: AppSettings) {
+        self.settings = settings
+    }
+
+    func captureWindow() {
+        capture(args: settings.includeWindowShadow ? ["-w"] : ["-w", "-o"])
+    }
+
+    func captureDesktop() {
+        capture(args: [])
+    }
+
+    private func capture(args: [String]) {
+        let panel = floatingPanel
+        let wasVisible = panel?.isVisible ?? false
+
+        if wasVisible {
+            panel?.orderOut(nil)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+            let path = screenshotPath()
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: "/usr/sbin/screencapture")
+            process.arguments = args + [path]
+            process.terminationHandler = { _ in
+                if wasVisible {
+                    DispatchQueue.main.async {
+                        panel?.orderFront(nil)
+                    }
+                }
+            }
+            do {
+                try process.run()
+            } catch {
+                if wasVisible {
+                    panel?.orderFront(nil)
+                }
+            }
+        }
+    }
+
+    private func screenshotPath() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd-HHmmss"
+        let timestamp = formatter.string(from: Date())
+        return "\(settings.saveLocation)/SnapIt-\(timestamp).png"
+    }
+}
