@@ -2,10 +2,10 @@ import Foundation
 import AppKit
 
 @Observable
-final class AppSettings {
-    private let defaults = UserDefaults.standard
+public final class AppSettings {
+    let defaults: UserDefaults
 
-    var showFloatingWidget: Bool {
+    public var showFloatingWidget: Bool {
         didSet { defaults.set(showFloatingWidget, forKey: "showFloatingWidget") }
     }
 
@@ -37,8 +37,8 @@ final class AppSettings {
         }
     }
 
-    init() {
-        let defaults = UserDefaults.standard
+    public init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
 
         if defaults.object(forKey: "showFloatingWidget") == nil {
             defaults.set(true, forKey: "showFloatingWidget")

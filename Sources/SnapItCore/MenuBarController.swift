@@ -1,13 +1,13 @@
 import AppKit
 
-final class MenuBarController: NSObject {
+public final class MenuBarController: NSObject {
     private let statusItem: NSStatusItem
     private let settings: AppSettings
     private let captureService: ScreenCaptureService
     private weak var widgetController: FloatingWidgetController?
     private var settingsWindowController: SettingsWindowController?
 
-    init(settings: AppSettings, captureService: ScreenCaptureService, widgetController: FloatingWidgetController) {
+    public init(settings: AppSettings, captureService: ScreenCaptureService, widgetController: FloatingWidgetController) {
         self.settings = settings
         self.captureService = captureService
         self.widgetController = widgetController
@@ -86,7 +86,7 @@ final class MenuBarController: NSObject {
 }
 
 extension MenuBarController: NSMenuDelegate {
-    func menuWillOpen(_ menu: NSMenu) {
+    public func menuWillOpen(_ menu: NSMenu) {
         if let toggleItem = menu.item(withTitle: "Show Widget") ?? menu.item(withTitle: "Hide Widget") {
             toggleItem.title = settings.showFloatingWidget ? "Hide Widget" : "Show Widget"
         }

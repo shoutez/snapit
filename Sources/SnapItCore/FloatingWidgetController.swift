@@ -1,14 +1,14 @@
 import AppKit
 import SwiftUI
 
-final class FloatingWidgetController: NSObject {
+public final class FloatingWidgetController: NSObject {
     let panel: NSPanel
     let settings: AppSettings
     let captureService: ScreenCaptureService
     private var popover: NSPopover?
     private var overlayPanel: NSPanel?
 
-    init(settings: AppSettings, captureService: ScreenCaptureService) {
+    public init(settings: AppSettings, captureService: ScreenCaptureService) {
         self.settings = settings
         self.captureService = captureService
 
@@ -45,7 +45,7 @@ final class FloatingWidgetController: NSObject {
         )
     }
 
-    func show() {
+    public func show() {
         panel.alphaValue = settings.widgetOpacity
         panel.orderFront(nil)
     }

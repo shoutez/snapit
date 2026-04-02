@@ -1,7 +1,10 @@
-.PHONY: build bundle install run clean
+.PHONY: build test bundle install run clean
 
 build:
 	swift build -c release
+
+test:
+	swift test
 
 bundle: build
 	bash scripts/bundle.sh

@@ -1,4 +1,5 @@
 import AppKit
+import SnapItCore
 
 @main
 struct SnapItApp {
