@@ -16,12 +16,20 @@ public final class ScreenCaptureService {
         []
     }
 
+    func captureAreaArgs() -> [String] {
+        ["-s"]
+    }
+
     public func captureWindow() {
         capture(args: captureWindowArgs())
     }
 
     public func captureDesktop() {
         capture(args: captureDesktopArgs())
+    }
+
+    public func captureArea() {
+        capture(args: captureAreaArgs())
     }
 
     private func capture(args: [String]) {
@@ -38,9 +46,14 @@ public final class ScreenCaptureService {
             process.executableURL = URL(fileURLWithPath: "/usr/sbin/screencapture")
             process.arguments = args + [path]
             process.terminationHandler = { _ in
-                if wasVisible {
-                    DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    if wasVisible {
                         panel?.orderFront(nil)
+                    }
+                    if FileManager.default.fileExists(atPath: path) {
+                        let pasteboard = NSPasteboard.general
+                        pasteboard.clearContents()
+                        pasteboard.setString(path, forType: .string)
                     }
                 }
             }

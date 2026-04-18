@@ -41,6 +41,13 @@ final class ScreenCaptureServiceTests: XCTestCase {
         XCTAssertEqual(service.captureDesktopArgs(), [])
     }
 
+    func testCaptureAreaArgs() {
+        let settings = AppSettings(defaults: suite)
+        let service = ScreenCaptureService(settings: settings)
+
+        XCTAssertEqual(service.captureAreaArgs(), ["-s"])
+    }
+
     func testScreenshotPathFormat() {
         let settings = AppSettings(defaults: suite)
         settings.saveLocation = "/tmp/test-screenshots"

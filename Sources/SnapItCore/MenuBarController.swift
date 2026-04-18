@@ -30,6 +30,11 @@ public final class MenuBarController: NSObject {
         windowItem.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: nil)
         menu.addItem(windowItem)
 
+        let areaItem = NSMenuItem(title: "Capture Area", action: #selector(captureArea), keyEquivalent: "")
+        areaItem.target = self
+        areaItem.image = NSImage(systemSymbolName: "crop", accessibilityDescription: nil)
+        menu.addItem(areaItem)
+
         let desktopItem = NSMenuItem(title: "Capture Desktop", action: #selector(captureDesktop), keyEquivalent: "")
         desktopItem.target = self
         desktopItem.image = NSImage(systemSymbolName: "desktopcomputer", accessibilityDescription: nil)
@@ -57,6 +62,10 @@ public final class MenuBarController: NSObject {
 
     @objc private func captureWindow() {
         captureService.captureWindow()
+    }
+
+    @objc private func captureArea() {
+        captureService.captureArea()
     }
 
     @objc private func captureDesktop() {
