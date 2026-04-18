@@ -22,6 +22,19 @@ struct CapturePopover: View {
 
             Button(action: {
                 dismissAction()
+                captureService.captureArea()
+            }) {
+                Label("Area", systemImage: "crop")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .buttonStyle(.plain)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 6)
+
+            Divider()
+
+            Button(action: {
+                dismissAction()
                 captureService.captureDesktop()
             }) {
                 Label("Desktop", systemImage: "desktopcomputer")
